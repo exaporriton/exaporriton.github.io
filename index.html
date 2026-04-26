@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Byron Exaporriton — Analytics Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#1e1e1e;
+  --bg2:#252526;
+  --bg3:#2d2d2d;
+  --accent:#569cd6;
+  --accent2:#9cdcfe;
+  --text:#d4d4d4;
+  --muted:#6a9955;
+  --border:#3c3c3c;
+  --card:#252526;
+  --keyword:#c586c0;
+  --string:#ce9178;
+  --fn:#dcdcaa;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;background:rgba(8,13,24,0.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'JetBrains Mono',monospace;font-size:0.9rem;color:var(--accent);letter-spacing:0.05em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;letter-spacing:0.05em;text-transform:uppercase;transition:color 0.2s}
+.nav-links a:hover{color:var(--accent)}
+
+/* HERO */
+#hero{min-height:100vh;display:flex;align-items:center;padding:6rem 10% 4rem;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:0.3}
+.hero-glow{position:absolute;top:20%;left:30%;width:600px;height:600px;background:radial-gradient(circle,rgba(59,130,246,0.08) 0%,transparent 70%);pointer-events:none}
+.hero-content{position:relative;z-index:1;max-width:750px}
+.hero-tag{display:inline-flex;align-items:center;gap:0.5rem;background:rgba(59,130,246,0.1);border:1px solid rgba(59,130,246,0.3);border-radius:2rem;padding:0.35rem 1rem;font-size:0.8rem;color:var(--accent);margin-bottom:2rem;font-family:'JetBrains Mono',monospace}
+.hero-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+h1{font-size:clamp(2.8rem,6vw,5rem);font-weight:700;line-height:1.1;margin-bottom:1.5rem;letter-spacing:-0.02em}
+h1 span{color:var(--accent)}
+.hero-sub{font-size:1.15rem;color:var(--muted);max-width:560px;margin-bottom:2.5rem;line-height:1.8}
+.btn-row{display:flex;gap:1rem;flex-wrap:wrap}
+.btn{padding:0.75rem 1.75rem;border-radius:0.5rem;font-size:0.9rem;font-weight:500;text-decoration:none;transition:all 0.2s;cursor:pointer;border:none;display:inline-flex;align-items:center;gap:0.5rem}
+.btn-primary{background:var(--accent);color:#fff}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent);transform:translateY(-2px)}
+.scroll-hint{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:0.5rem;color:var(--muted);font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase}
+.scroll-arrow{width:1px;height:40px;background:linear-gradient(to bottom,var(--accent),transparent);animation:scrollDown 1.5s ease-in-out infinite}
+@keyframes scrollDown{0%{transform:scaleY(0);transform-origin:top}50%{transform:scaleY(1);transform-origin:top}51%{transform:scaleY(1);transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom}}
+
+/* SECTIONS */
+section{padding:6rem 10%}
+.section-label{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--accent);text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.75rem}
+.section-title{font-size:clamp(1.8rem,3vw,2.5rem);font-weight:700;margin-bottom:3rem;letter-spacing:-0.02em}
+section:nth-child(even){background:var(--bg2)}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.about-text p{color:var(--muted);margin-bottom:1.25rem;line-height:1.9}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:0.75rem;padding:1.5rem;text-align:center}
+.stat-num{font-size:2.2rem;font-weight:700;color:var(--accent);font-family:'JetBrains Mono',monospace}
+.stat-label{font-size:0.8rem;color:var(--muted);margin-top:0.25rem}
+
+/* EXPERIENCE TIMELINE */
+.timeline{position:relative;padding-left:2.5rem}
+.timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:1px;background:linear-gradient(to bottom,var(--accent),transparent)}
+.timeline-item{position:relative;margin-bottom:3rem}
+.timeline-dot{position:absolute;left:-2.7rem;top:0.35rem;width:10px;height:10px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 3px rgba(59,130,246,0.2)}
+.timeline-header{display:flex;justify-content:space-between;align-items:flex-start;gap:1rem;margin-bottom:0.5rem;flex-wrap:wrap}
+.timeline-role{font-size:1.05rem;font-weight:600;color:var(--text)}
+.timeline-date{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--accent);white-space:nowrap;background:rgba(59,130,246,0.1);padding:0.25rem 0.75rem;border-radius:2rem;border:1px solid rgba(59,130,246,0.2)}
+.timeline-company{font-size:0.9rem;color:var(--accent2);margin-bottom:0.75rem;font-weight:500}
+.timeline-desc{color:var(--muted);font-size:0.9rem;line-height:1.8}
+.timeline-tags{display:flex;gap:0.5rem;flex-wrap:wrap;margin-top:0.75rem}
+.tag{background:rgba(59,130,246,0.08);border:1px solid rgba(59,130,246,0.2);color:var(--accent2);font-size:0.72rem;padding:0.2rem 0.6rem;border-radius:0.25rem;font-family:'JetBrains Mono',monospace}
+
+/* SKILLS */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.5rem}
+.skill-group{background:var(--card);border:1px solid var(--border);border-radius:0.75rem;padding:1.5rem;transition:border-color 0.2s}
+.skill-group:hover{border-color:var(--accent)}
+.skill-group-title{font-size:0.85rem;font-weight:600;color:var(--accent);margin-bottom:1rem;display:flex;align-items:center;gap:0.5rem}
+.skill-icon{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.skill-list{display:flex;flex-direction:column;gap:0.5rem}
+.skill-item{font-size:0.85rem;color:var(--muted);display:flex;align-items:center;gap:0.5rem}
+.skill-item::before{content:'';width:3px;height:3px;border-radius:50%;background:var(--border);flex-shrink:0}
+
+/* PROJECTS */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.project-card{background:var(--card);border:1px solid var(--border);border-radius:0.75rem;padding:1.75rem;transition:all 0.2s;cursor:pointer;text-decoration:none;display:block}
+.project-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.project-num{font-family:'JetBrains Mono',monospace;font-size:0.7rem;color:var(--accent);margin-bottom:1rem;opacity:0.6}
+.project-title{font-size:1rem;font-weight:600;color:var(--text);margin-bottom:0.75rem}
+.project-desc{font-size:0.85rem;color:var(--muted);line-height:1.7;margin-bottom:1.25rem}
+.project-link{font-size:0.8rem;color:var(--accent);font-family:'JetBrains Mono',monospace;display:flex;align-items:center;gap:0.4rem}
+.project-link svg{width:12px;height:12px}
+
+/* EDUCATION */
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.5rem}
+.edu-card{background:var(--card);border:1px solid var(--border);border-radius:0.75rem;padding:1.5rem;border-left:3px solid var(--accent)}
+.edu-degree{font-size:0.85rem;font-weight:600;color:var(--text);margin-bottom:0.3rem}
+.edu-school{font-size:0.9rem;color:var(--accent2);font-weight:500;margin-bottom:0.3rem}
+.edu-year{font-family:'JetBrains Mono',monospace;font-size:0.75rem;color:var(--muted)}
+
+/* CONTACT */
+#contact{text-align:center}
+#contact .section-title{margin-bottom:1.5rem}
+#contact p{color:var(--muted);max-width:480px;margin:0 auto 2.5rem}
+.contact-links{display:flex;justify-content:center;gap:1.5rem;flex-wrap:wrap}
+.contact-link{display:flex;align-items:center;gap:0.5rem;color:var(--muted);text-decoration:none;font-size:0.9rem;padding:0.75rem 1.25rem;border:1px solid var(--border);border-radius:0.5rem;transition:all 0.2s}
+.contact-link:hover{border-color:var(--accent);color:var(--accent)}
+.contact-link svg{width:16px;height:16px}
+
+/* FOOTER */
+footer{text-align:center;padding:2rem;border-top:1px solid var(--border);color:var(--muted);font-size:0.8rem;font-family:'JetBrains Mono',monospace}
+
+/* FADE IN */
+.fade-in{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-in.visible{opacity:1;transform:none}
+
+/* MOBILE */
+@media(max-width:768px){
+  nav{padding:1rem}
+  .nav-links{gap:1rem}
+  #hero{padding:6rem 5% 4rem}
+  section{padding:4rem 5%}
+  .about-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">byron.exe</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#chatbot">Chat</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+      <h1>Byron<br><span>Exaporriton</span></h1>
+    <p class="hero-sub">Analytics Engineer at ABN AMRO · Turning raw data into decisions that matter · Based in Amsterdam</p>
+    <div class="btn-row">
+      <a href="#projects" class="btn btn-primary">View Projects</a>
+      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span>Scroll</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="fade-in">
+    <p class="section-label">// about me</p>
+    <h2 class="section-title">Passionate about data.<br>Fuelled by cycling.</h2>
+  </div>
+  <div class="about-grid fade-in">
+    <div class="about-text">
+      <p>I'm an Analytics Engineer passionate about unlocking the value of data and AI to drive meaningful impact in organisations. At ABN AMRO, I focus on building automation solutions and exploring the rapidly evolving world of AI agents — from Copilot Studio to modern agent frameworks and the Databricks ecosystem.</p>
+      <p>I'm leading the organisation-wide introduction of Power BI Copilot, shaping the governance, security, and responsible usage policies that enable safe and scalable AI adoption. My toolkit spans Python, Azure DevOps, and cloud computing, applied to streamline processes and empower teams to work smarter.</p>
+      <p>When I'm not deep in data or chasing the next AI rabbit hole, you'll find me on my bike. There's something about a long ride that clears the mind, fuels fresh ideas, and reminds me that the best breakthroughs often happen far from a screen.</p>
+    </div>
+    <div class="about-stats">
+      <div class="stat-card">
+        <div class="stat-num">8+</div>
+        <div class="stat-label">Years of Experience</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">6</div>
+        <div class="stat-label">Companies & Industries</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3</div>
+        <div class="stat-label">Countries Worked In</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">2</div>
+        <div class="stat-label">Postgraduate Degrees</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="fade-in">
+    <p class="section-label">// experience</p>
+    <h2 class="section-title">Where I've worked</h2>
+  </div>
+  <div class="timeline fade-in">
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-header">
+        <div class="timeline-role">Analytics Engineer</div>
+        <div class="timeline-date">Jan 2024 → Present</div>
+      </div>
+      <div class="timeline-company">ABN AMRO Bank N.V. · Amsterdam</div>
+      <div class="timeline-desc">Leading the design and development of automation solutions using Python, Azure DevOps, and cloud computing. Building AI agents in Microsoft Copilot Studio and prototyping across multiple agent frameworks including the Databricks ecosystem. Leading the organisation-wide rollout of Power BI Copilot — defining governance policies, security frameworks, and responsible usage guidelines for safe AI adoption at scale.</div>
+      <div class="timeline-tags">
+        <span class="tag">Databricks</span><span class="tag">Power BI Copilot</span><span class="tag">Copilot Studio</span><span class="tag">Azure DevOps</span><span class="tag">Python</span><span class="tag">AI Agents</span><span class="tag">CI/CD</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-header">
+        <div class="timeline-role">Advanced Analytics Consultant</div>
+        <div class="timeline-date">Jan 2022 → Dec 2023</div>
+      </div>
+      <div class="timeline-company">EY · Amsterdam</div>
+      <div class="timeline-desc">Delivered data strategy guidance and predictive marketing models. Built automated algorithms and compelling data visualisations that translated complex datasets into actionable client insights.</div>
+      <div class="timeline-tags">
+        <span class="tag">Predictive Modelling</span><span class="tag">Data Strategy</span><span class="tag">Data Viz</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-header">
+        <div class="timeline-role">Interim Data Analytics Engineer</div>
+        <div class="timeline-date">Jan 2022 → Dec 2023</div>
+      </div>
+      <div class="timeline-company">Nike · Hilversum</div>
+      <div class="timeline-desc">Led real-time marketing dashboards and KPI monitoring. Conducted deep customer segmentation analysis to drive targeted campaigns and improve engagement and retention.</div>
+      <div class="timeline-tags">
+        <span class="tag">Marketing Analytics</span><span class="tag">Segmentation</span><span class="tag">Real-Time Reporting</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-header">
+        <div class="timeline-role">E-commerce Analyst</div>
+        <div class="timeline-date">Jan 2022 → Dec 2022</div>
+      </div>
+      <div class="timeline-company">KARL LAGERFELD · Amsterdam</div>
+      <div class="timeline-desc">Time series forecasting for sales across karl.com and marketplaces. Regression-based budget allocation across the marketing funnel. Market basket analysis to improve cross-selling strategies.</div>
+      <div class="timeline-tags">
+        <span class="tag">Forecasting</span><span class="tag">Regression Models</span><span class="tag">Market Basket</span>
+      </div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-header">
+        <div class="timeline-role">Marketing Manager</div>
+        <div class="timeline-date">Jan 2019 → Dec 2020</div>
+      </div>
+      <div class="timeline-company">Torvol Drone Accessories · Amsterdam</div>
+      <div class="timeline-desc">Converted raw data into actionable insights using predictive modelling. Built What-If analyses and optimised the marketing funnel end-to-end.</div>
+      <div class="timeline-tags">
+        <span class="tag">Predictive Analytics</span><span class="tag">Funnel Optimisation</span><span class="tag">Sales Forecast</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="fade-in">
+    <p class="section-label">// skills</p>
+    <h2 class="section-title">Tools & technologies</h2>
+  </div>
+  <div class="skills-grid fade-in">
+    <div class="skill-group">
+      <div class="skill-group-title"><div class="skill-icon"></div>Data Engineering</div>
+      <div class="skill-list">
+        <div class="skill-item">AI Agents (Copilot Studio)</div>
+        <div class="skill-item">Databricks</div>
+        <div class="skill-item">Apache Spark</div>
+        <div class="skill-item">Python</div>
+        <div class="skill-item">SQL / T-SQL</div>
+        <div class="skill-item">n8n (Automation)</div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title"><div class="skill-icon"></div>BI & Visualisation</div>
+      <div class="skill-list">
+        <div class="skill-item">Power BI</div>
+        <div class="skill-item">DAX / Power Query</div>
+        <div class="skill-item">Tableau</div>
+        <div class="skill-item">Looker</div>
+        <div class="skill-item">Financial Reporting</div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title"><div class="skill-icon"></div>Machine Learning</div>
+      <div class="skill-list">
+        <div class="skill-item">Python (scikit-learn, pandas)</div>
+        <div class="skill-item">Time Series Forecasting</div>
+        <div class="skill-item">Regression Models</div>
+        <div class="skill-item">Customer Segmentation</div>
+        <div class="skill-item">Market Basket Analysis</div>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title"><div class="skill-icon"></div>Cloud & DevOps</div>
+      <div class="skill-list">
+        <div class="skill-item">Microsoft Azure</div>
+        <div class="skill-item">Azure DevOps / CI/CD</div>
+        <div class="skill-item">Microsoft Copilot Studio</div>
+        <div class="skill-item">Git / GitHub</div>
+        <div class="skill-item">Power Automate</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="fade-in">
+    <p class="section-label">// projects</p>
+    <h2 class="section-title">Things I've built</h2>
+  </div>
+  <div class="projects-grid fade-in">
+    <a href="https://github.com/exaporriton/Portfolio" class="project-card">
+      <div class="project-num">01 /</div>
+      <div class="project-title">Portfolio Repository</div>
+      <div class="project-desc">A curated collection of data analytics and engineering projects showcasing end-to-end solutions built across various industries.</div>
+      <div class="project-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        github.com/exaporriton
+      </div>
+      <div class="timeline-tags" style="margin-top:1rem">
+        <span class="tag">Python</span><span class="tag">SQL</span><span class="tag">Power BI</span>
+      </div>
+    </a>
+    <div class="project-card" style="cursor:default;opacity:0.6">
+      <div class="project-num">02 /</div>
+      <div class="project-title">Marketing Mix Modelling</div>
+      <div class="project-desc">Regression-based budget attribution model across digital and offline channels, used to optimise ROAS for a retail client.</div>
+      <div class="project-link">Coming soon</div>
+      <div class="timeline-tags" style="margin-top:1rem">
+        <span class="tag">Python</span><span class="tag">Regression</span><span class="tag">Attribution</span>
+      </div>
+    </div>
+    <div class="project-card" style="cursor:default;opacity:0.6">
+      <div class="project-num">03 /</div>
+      <div class="project-title">Real-Time KPI Dashboard</div>
+      <div class="project-desc">End-to-end pipeline from raw event data to a live Power BI dashboard tracking campaign performance with sub-minute latency.</div>
+      <div class="project-link">Coming soon</div>
+      <div class="timeline-tags" style="margin-top:1rem">
+        <span class="tag">Databricks</span><span class="tag">Power BI</span><span class="tag">Azure</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHATBOT -->
+<section id="chatbot">
+  <div class="fade-in">
+    <p class="section-label">// ask me anything</p>
+    <h2 class="section-title">Chat with my resume</h2>
+    <p style="color:var(--muted);margin-bottom:2rem;max-width:560px">Curious about my background, skills, or experience? Ask the bot below — it knows my resume inside out.</p>
+    <div style="border:1px solid var(--border);border-radius:0.75rem;overflow:hidden;max-width:850px">
+      <iframe src="https://exaporriton-resume-bot.hf.space" frameborder="0" width="100%" height="450" style="display:block"></iframe>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+  <div class="fade-in">
+    <p class="section-label">// resume</p>
+    <h2 class="section-title">Download my resume</h2>
+    <p style="color:var(--muted);margin-bottom:2.5rem;max-width:520px">Prefer a document? Grab a copy of my full resume in PDF format.</p>
+    <div style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap">
+      <a href="Byron_Exaporriton_Resume.pdf" download="Byron_Exaporriton_Resume.pdf" class="btn btn-primary" style="font-size:1rem;padding:0.9rem 2rem;display:inline-flex;align-items:center;gap:0.6rem">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Download PDF
+      </a>
+      <div style="background:var(--card);border:1px solid var(--border);border-radius:0.75rem;padding:1rem 1.5rem;display:flex;align-items:center;gap:1rem">
+        <div style="width:40px;height:40px;border-radius:0.5rem;background:rgba(86,156,214,0.12);border:1px solid rgba(86,156,214,0.25);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent)" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+        </div>
+        <div>
+          <div style="font-size:0.85rem;font-weight:600;color:var(--text)">Byron_Exaporriton_Resume.pdf</div>
+          <div style="font-size:0.75rem;color:var(--muted);font-family:'JetBrains Mono',monospace">PDF · Analytics Engineer</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="fade-in">
+    <p class="section-label">// education</p>
+    <h2 class="section-title">Academic background</h2>
+  </div>
+  <div class="edu-grid fade-in">
+    <div class="edu-card">
+      <div class="edu-degree">MSc Marketing</div>
+      <div class="edu-school">Vrije Universiteit Amsterdam</div>
+      <div class="edu-year">2020 – 2021</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">BSc Management Science & Technology</div>
+      <div class="edu-school">Athens University of Economics & Business</div>
+      <div class="edu-year">2014 – 2018</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Mechanical Engineering</div>
+      <div class="edu-school">National Technical University of Athens</div>
+      <div class="edu-year">2012 – 2014</div>
+    </div>
+    <div class="edu-card">
+      <div class="edu-degree">Google Data Analytics Certificate</div>
+      <div class="edu-school">Google / Coursera</div>
+      <div class="edu-year">Certification</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="fade-in">
+    <p class="section-label">// contact</p>
+    <h2 class="section-title">Let's build something</h2>
+    <p>Open to interesting problems in data engineering, analytics, and AI-powered workflows. Always happy to connect.</p>
+    <div class="contact-links">
+      <a href="mailto:exaporriton@gmail.com" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+        exaporriton@gmail.com
+      </a>
+      <a href="https://www.linkedin.com/in/byronexaporriton-1b690a109" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
+      </a>
+      <a href="https://github.com/exaporriton/Portfolio" class="contact-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+        GitHub
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span style="color:var(--accent)">byron.exe</span> · Built for GitHub Pages · Amsterdam © 2025
+</footer>
+
+<script>
+const obs = new IntersectionObserver(els => {
+  els.forEach(el => { if(el.isIntersecting) el.target.classList.add('visible') })
+}, {threshold: 0.12})
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el))
+</script>
+</body>
+</html>
